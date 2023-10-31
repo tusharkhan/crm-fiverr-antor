@@ -520,3 +520,40 @@ function app_unserialize($data)
 
     return $unserialized;
 }
+
+
+function dd(...$data){
+    echo '<pre>';
+    var_dump($data);
+    echo '</pre>';
+    die();
+}
+
+
+function app_get_all_files($dir, $recursive = false, $includeDir = false)
+{
+    $files = [];
+    $dir   = rtrim($dir, '/');
+
+    if (is_dir($dir)) {
+        $dirHandle = opendir($dir);
+
+        while ($file = readdir($dirHandle)) {
+            if ($file != '.' && $file != '..') {
+                if (is_dir($dir . '/' . $file) && $recursive) {
+                    $files = array_merge($files, app_get_all_files($dir . '/' . $file, $recursive, $includeDir));
+                } else {
+                    $files[] = $includeDir ? $dir . '/' . $file : $file;
+                }
+            }
+        }
+    }
+
+    return $files;
+}
+
+
+function match_email_pattern($email)
+{
+    return preg_match('/^([a-zA-Z0-9._-]+@orinway.com)+$/', $email);
+}

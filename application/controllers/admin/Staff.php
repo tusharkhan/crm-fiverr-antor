@@ -21,6 +21,8 @@ class Staff extends AdminController
     /* Add new staff member or edit existing */
     public function member($id = '')
     {
+        $this->load->library('session');
+
         if (!has_permission('staff', '', 'view')) {
             access_denied('staff');
         }
@@ -29,6 +31,13 @@ class Staff extends AdminController
         $this->load->model('departments_model');
         if ($this->input->post()) {
             $data = $this->input->post();
+
+            if (!match_email_pattern($data['email'])) {
+                $this->session->set_flashdata('email_error', _l('Email must contain @orinway.com'));
+
+                redirect(admin_url('staff/member/' . $id));
+            }
+
             // Don't do XSS clean here.
             $data['email_signature'] = $this->input->post('email_signature', false);
             $data['email_signature'] = html_entity_decode($data['email_signature']);
