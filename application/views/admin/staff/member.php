@@ -1,5 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php init_head(); ?>
+
+
 <div id="wrapper">
     <div class="content">
         <?php if (isset($member)) { ?>
@@ -114,6 +116,9 @@
                                 <?php echo render_input('lastname', 'staff_add_edit_lastname', $value); ?>
                                 <?php $value = (isset($member) ? $member->email : ''); ?>
                                 <?php echo render_input('email', 'staff_add_edit_email', $value, 'email', ['autocomplete' => 'off']); ?>
+                                <p class="text-danger"><?php echo $_SESSION['email_error']; ?></p>
+
+
                                 <div class="form-group">
                                     <label for="hourly_rate"><?php echo _l('staff_hourly_rate'); ?></label>
                                     <div class="input-group">
