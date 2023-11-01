@@ -557,3 +557,9 @@ function match_email_pattern($email)
 {
     return preg_match('/^([a-zA-Z0-9._-]+@orinway.com)+$/', $email);
 }
+
+
+function checkIsset($array, $key)
+{
+    return $array[$key] ?? null;
+}

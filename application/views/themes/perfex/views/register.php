@@ -1,35 +1,41 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<div class="col-md-10 row col-md-offset-1 mbot15">
-    <div class="col-md-6">
-        <h1 class="tw-font-semibold register-heading text-right">
-            <?php echo _l('clients_register_heading'); ?>
-        </h1>
-    </div>
-    <div class="col-md-3 mtop15">
-        <?php if (!is_language_disabled()) { ?>
-        <div class="form-group">
-            <select name="language" id="language" class="form-control selectpicker"
-                onchange="change_contact_language(this)"
-                data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>" data-live-search="true">
-                <?php $selected = (get_contact_language() != '') ? get_contact_language() : get_option('active_language'); ?>
-                <?php foreach ($this->app->get_available_languages() as $availableLanguage) { ?>
-                <option value="<?php echo $availableLanguage; ?>"
-                    <?php echo ($availableLanguage == $selected) ? 'selected' : '' ?>>
-                    <?php echo ucfirst($availableLanguage); ?>
-                </option>
-                <?php } ?>
-            </select>
-        </div>
-        <?php } ?>
-    </div>
-</div>
+
+
+<!--<div class="col-md-10 row col-md-offset-1 mbot15">-->
+<!--    <div class="col-md-6">-->
+<!--        <h1 class="tw-font-semibold register-heading text-right">-->
+<!--            --><?php //echo _l('clients_register_heading'); ?>
+<!--        </h1>-->
+<!--    </div>-->
+<!--    <div class="col-md-3 mtop15">-->
+<!--        --><?php //if (!is_language_disabled()) { ?>
+<!--        <div class="form-group">-->
+<!--            <select name="language" id="language" class="form-control selectpicker"-->
+<!--                onchange="change_contact_language(this)"-->
+<!--                data-none-selected-text="--><?php //echo _l('dropdown_non_selected_tex'); ?><!--" data-live-search="true">-->
+<!--                --><?php //$selected = (get_contact_language() != '') ? get_contact_language() : get_option('active_language'); ?>
+<!--                --><?php //foreach ($this->app->get_available_languages() as $availableLanguage) { ?>
+<!--                <option value="--><?php //echo $availableLanguage; ?><!--"-->
+<!--                    --><?php //echo ($availableLanguage == $selected) ? 'selected' : '' ?>
+<!--                >-->
+<!--                    --><?php //echo ucfirst($availableLanguage); ?>
+<!--                </option>-->
+<!--                --><?php //} ?>
+<!--            </select>-->
+<!--        </div>-->
+<!--        --><?php //} ?>
+<!--    </div>-->
+<!--</div>-->
+
+
 <div class="col-md-10 col-md-offset-1">
     <?php echo form_open('authentication/register', ['id' => 'register-form']); ?>
     <div class="panel_s">
         <div class="panel-body">
             <div class="row">
+                <h4 class="bold register-contact-info-heading text-center">Customer Registration</h4>
                 <div class="col-md-6">
-                    <h4 class="bold register-contact-info-heading"><?php echo _l('client_register_contact_info'); ?>
+<!--                    <h4 class="bold register-contact-info-heading">--><?php //echo _l('client_register_contact_info'); ?>
                     </h4>
                     <div class="form-group mtop15 register-firstname-group">
                         <label class="control-label" for="<?php echo $fields['firstname']; ?>">
@@ -61,16 +67,19 @@
                         <input type="text" class="form-control" name="contact_phonenumber" id="contact_phonenumber"
                             value="<?php echo set_value('contact_phonenumber'); ?>">
                     </div>
-                    <div class="form-group register-website-group">
-                        <label class="control-label" for="website"><?php echo _l('client_website'); ?></label>
-                        <input type="text" class="form-control" name="website" id="website"
-                            value="<?php echo set_value('website'); ?>">
-                    </div>
-                    <div class="form-group register-position-group">
-                        <label class="control-label" for="title"><?php echo _l('contact_position'); ?></label>
-                        <input type="text" class="form-control" name="title" id="title"
-                            value="<?php echo set_value('title'); ?>">
-                    </div>
+<!--                    <div class="form-group register-website-group">-->
+<!--                        <label class="control-label" for="website">--><?php //echo _l('client_website'); ?><!--</label>-->
+<!--                        <input type="text" class="form-control" name="website" id="website"-->
+<!--                            value="--><?php //echo set_value('website'); ?><!--">-->
+<!--                    </div>-->
+<!--                    <div class="form-group register-position-group">-->
+<!--                        <label class="control-label" for="title">--><?php //echo _l('contact_position'); ?><!--</label>-->
+<!--                        <input type="text" class="form-control" name="title" id="title"-->
+<!--                            value="--><?php //echo set_value('title'); ?><!--">-->
+<!--                    </div>-->
+
+
+
                     <div class="form-group register-password-group">
                         <label class="control-label" for="password"><span class="text-danger">*</span>
                             <?php echo _l('clients_register_password'); ?></label>
@@ -88,19 +97,18 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <h4 class="bold register-company-info-heading"><?php echo _l('client_register_company_info'); ?>
-                    </h4>
-                    <div class="form-group mtop15 register-company-group">
-                        <label class="control-label" for="<?php echo $fields['company']; ?>">
-                            <?php if (get_option('company_is_required') == 1) { ?>
-                            <span class="text-danger">*</span>
-                            <?php } ?>
-                            <?php echo _l('clients_company'); ?>
-                        </label>
-                        <input type="text" class="form-control" name="<?php echo $fields['company']; ?>"
-                            id="<?php echo $fields['company']; ?>" value="<?php echo set_value($fields['company']); ?>">
-                        <?php echo form_error($fields['company']); ?>
-                    </div>
+                    <h4 class="bold register-company-info-heading"><?php //echo _l('client_register_company_info'); ?></h4>
+<!--                    <div class="form-group mtop15 register-company-group">-->
+<!--                        <label class="control-label" for="--><?php //echo $fields['company']; ?><!--">-->
+<!--                            --><?php //if (get_option('company_is_required') == 1) { ?>
+<!--                            <span class="text-danger">*</span>-->
+<!--                            --><?php //} ?>
+<!--                            --><?php //echo _l('clients_company'); ?>
+<!--                        </label>-->
+<!--                        <input type="text" class="form-control" name="--><?php //echo $fields['company']; ?><!--"-->
+<!--                            id="--><?php //echo $fields['company']; ?><!--" value="--><?php //echo set_value($fields['company']); ?><!--">-->
+<!--                        --><?php //echo form_error($fields['company']); ?>
+<!--                    </div>-->
                     <?php if (get_option('company_requires_vat_number_field') == 1) { ?>
                     <div class="form-group register-vat-group">
                         <label class="control-label" for="vat"><?php echo _l('clients_vat'); ?></label>
@@ -108,20 +116,28 @@
                             value="<?php echo set_value('vat'); ?>">
                     </div>
                     <?php } ?>
-                    <div class="form-group register-company-phone-group">
-                        <label class="control-label" for="phonenumber"><?php echo _l('clients_phone'); ?></label>
-                        <input type="text" class="form-control" name="phonenumber" id="phonenumber"
-                            value="<?php echo set_value('phonenumber'); ?>">
+                    <div class="form-group register-country-group">
+                        <label class="control-label" for="travel_service">Travel Service</label>
+                        <select data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"
+                                data-live-search="true" name="travel_service" class="form-control" id="travel_service">
+                            <option value=""></option>
+                            <option value="Air Ticketing" >Air Ticketing</option>
+                            <option value="Student Migration" >Student Migration</option>
+                            <option value="Visa Services" >Visa Services</option>
+                            <option value="Inbound Tours" >Inbound Tours</option>
+                            <option value="Outbound Tours" >Outbound Tours</option>
+                        </select>
                     </div>
                     <div class="form-group register-country-group">
-                        <label class="control-label" for="lastname"><?php echo _l('clients_country'); ?></label>
+                        <label class="control-label" for="lastname"> <span class="text-danger" id="clients_country_danger_span">*</span> <?php echo _l('clients_country'); ?></label>
                         <select data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"
                             data-live-search="true" name="country" class="form-control" id="country">
                             <option value=""></option>
                             <?php foreach (get_all_countries() as $country) { ?>
                             <option value="<?php echo $country['country_id']; ?>" <?php if (get_option('customer_default_country') == $country['country_id']) {
     echo ' selected';
-} ?> <?php echo set_select('country', $country['country_id']); ?>><?php echo $country['short_name']; ?></option>
+} ?> <?php echo set_select('country', $country['country_id']); ?>><?php echo $country['short_name']; ?>
+                            </option>
                             <?php } ?>
                         </select>
                     </div>

@@ -66,6 +66,26 @@ app_customers_footer();
    */
    app_js_alerts();
    ?>
+
+
+<script>
+    let clients_country_danger_span = $('#clients_country_danger_span');
+    let travel_service = $('#travel_service');
+    let country = $('#country');
+
+    clients_country_danger_span.hide();
+
+    travel_service.on('change', function () {
+        if (travel_service.val() == 'Visa Services') {
+            clients_country_danger_span.show();
+            country.attr('required', true);
+        } else {
+            clients_country_danger_span.hide();
+            country.attr('required', false);
+        }
+    });
+</script>
+
 </body>
 
 </html>
