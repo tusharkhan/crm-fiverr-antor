@@ -1086,6 +1086,11 @@ class Clients extends AdminController
     public function visa_type_category()
     {
         $data = $this->input->post();
+        
+        if ($this->input->is_ajax_request()) {
+            $this->app->get_table_data('visa_type_category');
+        }
+
         if ( $data ){
             $insert_data = [
                 'name' => $data['name'],
@@ -1099,7 +1104,7 @@ class Clients extends AdminController
             if ( $inserted_id ){
                 set_alert('success', _l('added_successfully', _l('visa_type_category')));
             } else {
-                set_alert('danger', _l('problem_deleting', _l('visa_type_category')));
+                set_alert('danger', _l('problem_creating', _l('visa_type_category')));
             }
 
             echo json_encode(

@@ -21,9 +21,11 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                 <div class="panel_s">
                     <div class="panel-body panel-table-full">
                         <?php render_datatable([
+                                '#',
                         _l('customer_group_name'),
-                        _l('options'),
-                        ], 'customer-groups'); ?>
+                        _l('contact_active'),
+                        'Created At',
+                        ], 'visa-type-category'); ?>
                     </div>
                 </div>
             </div>
@@ -87,11 +89,12 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
     function manage_customer_groups(form) {
         var data = $(form).serialize();
         var url = form.action;
+        console.log({data,url})
         $.post(url, data).done(function(response) {
             response = JSON.parse(response);
             if (response.success == true) {
-                if($.fn.DataTable.isDataTable('.table-customer-groups')){
-                    $('.table-customer-groups').DataTable().ajax.reload();
+                if($.fn.DataTable.isDataTable('.table-visa-type-category')){
+                    $('.table-visa-type-category').DataTable().ajax.reload();
                 }
                 if($('body').hasClass('dynamic-create-groups') && typeof(response.id) != 'undefined') {
                     var groups = $('select[name="groups_in[]"]');
@@ -114,7 +117,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php init_tail(); ?>
 <script>
 $(function() {
-    initDataTable('.table-customer-groups', window.location.href, [1], [1]);
+    initDataTable('.table-visa-type-category', window.location.href, [1], [1]);
 });
 </script>
 </body>
