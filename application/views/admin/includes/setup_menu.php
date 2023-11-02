@@ -1,4 +1,16 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed');
+
+$setup_menu['customers']['children'][] = [
+    'parent_slug' => 'customers',
+    'name' => 'Visa Type Category',
+    'slug' => 'visa-type-category',
+    'href' => admin_url('clients/visa_type_category'),
+    'position' => 1,
+    'badge' => [],
+    'icon' => 'fa fa-visa',
+];
+
+?>
 <div id="setup-menu-wrapper" class="sidebar animated <?php if ($this->session->has_userdata('setup-menu-open')
     && $this->session->userdata('setup-menu-open') == true) {
     echo 'display-block';

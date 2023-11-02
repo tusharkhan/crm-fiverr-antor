@@ -1082,4 +1082,36 @@ class Clients extends AdminController
 
         echo json_encode($viewData);
     }
+
+    public function visa_type_category()
+    {
+        $data = $this->input->post();
+        if ( $data ){
+            $insert_data = [
+                'name' => $data['name'],
+                'active' => $data['settings']['active'] ? 1 : 0,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $inserted_id = $this->clients_model->add_visa_type_category($insert_data);
+
+            if ( $inserted_id ){
+                set_alert('success', _l('added_successfully', _l('visa_type_category')));
+            } else {
+                set_alert('danger', _l('problem_deleting', _l('visa_type_category')));
+            }
+
+            echo json_encode(
+                [
+                    'success' => $inserted_id ? true : false,
+                    'message' => $inserted_id ? _l('added_successfully', 'Visa Type Category') : _l('problem_deleting', 'Visa Type Category'),
+                ]
+            );
+
+            exit();
+        }
+        
+        $this->load->view('admin/clients/visa_type_category');
+    }
 }

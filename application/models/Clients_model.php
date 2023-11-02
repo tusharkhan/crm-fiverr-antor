@@ -1714,4 +1714,13 @@ class Clients_model extends App_Model
 
         return $this->db->get(db_prefix() . 'contacts')->result_array();
     }
+
+    public function add_visa_type_category($data)
+    {
+        $table_name = db_prefix() . 'visa_type_category';
+
+        $this->db->insert($table_name, $data);
+
+        return $this->db->insert_id();
+    }
 }

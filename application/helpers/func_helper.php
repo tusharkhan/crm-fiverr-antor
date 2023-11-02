@@ -523,8 +523,14 @@ function app_unserialize($data)
 
 
 function dd(...$data){
-    echo '<pre>';
     var_dump($data);
+    die();
+}
+
+
+function ddPrint(...$data){
+    echo '<pre>';
+    print_r($data);
     echo '</pre>';
     die();
 }
