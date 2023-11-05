@@ -50,7 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
                 <div class="row">
                     <div class="col-md-12">
                         <?php echo render_input('name', 'Visa Type Category name'); ?>
-                        <?php render_yes_no_option('active', 'Active ?') ?>
+                        <?php render_yes_no_option('active', 'Active') ?>
                         <?php echo form_hidden('id'); ?>
                     </div>
                 </div>
@@ -73,16 +73,24 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
         $('#customer_group_modal').on('show.bs.modal', function(e) {
             var invoker = $(e.relatedTarget);
             var group_id = $(invoker).data('id');
-            $('#customer_group_modal .add-title').removeClass('hide');
-            $('#customer_group_modal .edit-title').addClass('hide');
             $('#customer_group_modal input[name="id"]').val('');
             $('#customer_group_modal input[name="name"]').val('');
+            $("[name='settings[active]']").attr('checked', false);
+
+            let selectedColumnNameValue = $(invoker).parents('tr').find('td').eq(1).text();
+            let selectedColumnBooleanValue = $(invoker).parents('tr').find('td').eq(2).text();
+            let setSelectedRadio = (selectedColumnBooleanValue == 'Active') ? 1 : 2;
+            let radioIdToChecked = "#y_opt_"+ setSelectedRadio +"_Active";
+
+            console.log(selectedColumnBooleanValue)
+
             // is from the edit button
             if (typeof(group_id) !== 'undefined') {
                 $('#customer_group_modal input[name="id"]').val(group_id);
                 $('#customer_group_modal .add-title').addClass('hide');
                 $('#customer_group_modal .edit-title').removeClass('hide');
-                $('#customer_group_modal input[name="name"]').val($(invoker).parents('tr').find('td').eq(0).text());
+                $('#customer_group_modal input[name="name"]').val(selectedColumnNameValue);
+                $(radioIdToChecked).attr('checked', true);
             }
         });
     });

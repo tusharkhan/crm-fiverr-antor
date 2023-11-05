@@ -1723,4 +1723,12 @@ class Clients_model extends App_Model
 
         return $this->db->insert_id();
     }
+
+    public function edit_visa_type_category($data, $id)
+    {
+        $table_name = db_prefix() . 'visa_type_category';
+
+        $this->db->where('id', $id);
+        return $this->db->update($table_name, $data);
+    }
 }

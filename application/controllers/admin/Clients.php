@@ -1086,8 +1086,9 @@ class Clients extends AdminController
     public function visa_type_category()
     {
         $data = $this->input->post();
-        
-        if ($this->input->is_ajax_request()) {
+        $id  = (! empty($data['id'])) ? $data['id'] : null;
+
+        if ($this->input->is_ajax_request() && !$id ) {
             $this->app->get_table_data('visa_type_category');
         }
 
@@ -1095,11 +1096,17 @@ class Clients extends AdminController
             $insert_data = [
                 'name' => $data['name'],
                 'active' => $data['settings']['active'] ? 1 : 0,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
             ];
 
-            $inserted_id = $this->clients_model->add_visa_type_category($insert_data);
+            if ( empty($id) ) array_merge($insert_data, [
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            $inserted_id = null;
+
+            if ( empty($id) ) $inserted_id = $this->clients_model->add_visa_type_category($insert_data);
+            else $inserted_id = $this->clients_model->edit_visa_type_category($insert_data, $id);
 
             if ( $inserted_id ){
                 set_alert('success', _l('added_successfully', _l('visa_type_category')));

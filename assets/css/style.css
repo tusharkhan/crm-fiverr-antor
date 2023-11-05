@@ -5305,3 +5305,23 @@ div[contenteditable]:focus {
   padding: 8px;
   border-radius: 4px;
 }
+
+.badge {
+  color : #FFFFFF;
+}
+
+.badge-primary{
+    background-color: #2563eb;
+}
+
+.badge-secondary{
+    background-color: #64748b;
+}
+
+.badge-success{
+    background-color: #38c172;
+}
+
+.badge-danger{
+    background-color: #e3342f;
+}

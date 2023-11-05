@@ -188,6 +188,7 @@ class Authentication extends ClientsController
                       'travel_service'      => checkIsset($data,'travel_service'),
                       'custom_fields'       => isset($data['custom_fields']) && is_array($data['custom_fields']) ? $data['custom_fields'] : [],
                       'default_language'    => (get_contact_language() != '') ? get_contact_language() : get_option('active_language'),
+                      'visa_type_category'  => checkIsset($data,'visa_type_category'),
                 ], true);
 
                 if ($clientid) {

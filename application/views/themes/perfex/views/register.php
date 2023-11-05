@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<?php defined('BASEPATH') or exit('No direct script access allowed');?>
 
 
 <!--<div class="col-md-10 row col-md-offset-1 mbot15">-->
@@ -92,6 +92,21 @@
                         <input type="password" class="form-control" name="passwordr" id="passwordr">
                         <?php echo form_error('passwordr'); ?>
                     </div>
+
+                    <div class="form-group register-travel-service--group">
+                        <label class="control-label" for="travel_service">Travel Service</label>
+                        <select data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"
+                                data-live-search="true" name="travel_service" class="form-control" id="travel_service">
+                            <option value=""></option>
+                            <option value="Air Ticketing" >Air Ticketing</option>
+                            <option value="Student Migration" >Student Migration</option>
+                            <option value="Visa Services" >Visa Services</option>
+                            <option value="Inbound Tours" >Inbound Tours</option>
+                            <option value="Outbound Tours" >Outbound Tours</option>
+                        </select>
+                    </div>
+
+
                     <div class="register-contact-custom-fields">
                         <?php echo render_custom_fields('contacts', '', ['show_on_client_portal' => 1]); ?>
                     </div>
@@ -116,18 +131,19 @@
                             value="<?php echo set_value('vat'); ?>">
                     </div>
                     <?php } ?>
-                    <div class="form-group register-country-group">
-                        <label class="control-label" for="travel_service">Travel Service</label>
+
+
+                    <div class="form-group register-visa-type-category--group">
+                        <label class="control-label" for="visa_type_category"> <span class="text-danger">*</span> Visa type Category</label>
                         <select data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"
-                                data-live-search="true" name="travel_service" class="form-control" id="travel_service">
+                                data-live-search="true" name="visa_type_category" class="form-control" id="visa_type_category">
                             <option value=""></option>
-                            <option value="Air Ticketing" >Air Ticketing</option>
-                            <option value="Student Migration" >Student Migration</option>
-                            <option value="Visa Services" >Visa Services</option>
-                            <option value="Inbound Tours" >Inbound Tours</option>
-                            <option value="Outbound Tours" >Outbound Tours</option>
+                            <?php foreach (get_visa_type_category() as $country) { ?>
+                                <option value="<?php echo $country->id; ?>" ><?php echo $country->name; ?></option>
+                            <?php } ?>
                         </select>
                     </div>
+
                     <div class="form-group register-country-group">
                         <label class="control-label" for="lastname"> <span class="text-danger" id="clients_country_danger_span">*</span> <?php echo _l('clients_country'); ?></label>
                         <select data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>"
@@ -141,6 +157,7 @@
                             <?php } ?>
                         </select>
                     </div>
+
                     <div class="form-group register-city-group">
                         <label class="control-label" for="city"><?php echo _l('clients_city'); ?></label>
                         <input type="text" class="form-control" name="city" id="city"

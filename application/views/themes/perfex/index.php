@@ -72,16 +72,24 @@ app_customers_footer();
     let clients_country_danger_span = $('#clients_country_danger_span');
     let travel_service = $('#travel_service');
     let country = $('#country');
+    let visa_type_category = $('#visa_type_category');
+    let visa_type_category_main_div = $('.register-visa-type-category--group');
+    let visa_category_danger_span = $('#visa_category_danger_span');
 
     clients_country_danger_span.hide();
+    visa_type_category_main_div.hide();
 
     travel_service.on('change', function () {
         if (travel_service.val() == 'Visa Services') {
             clients_country_danger_span.show();
             country.attr('required', true);
+            visa_type_category.attr('required', true);
+            visa_type_category_main_div.show();
         } else {
             clients_country_danger_span.hide();
             country.attr('required', false);
+            visa_type_category.attr('required', false);
+            visa_type_category_main_div.hide();
         }
     });
 </script>
