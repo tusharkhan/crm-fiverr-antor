@@ -140,6 +140,9 @@ class Authentication extends ClientsController
         }
 
         if ($this->input->post()) {
+            $passport = null;
+
+
             if ($honeypot &&
                 count(array_filter($this->input->post(['email', 'firstname', 'lastname', 'company']))) > 0) {
                 show_404();
@@ -222,6 +225,58 @@ class Authentication extends ClientsController
                     }
 
                     send_customer_registered_email_to_administrators($clientid);
+
+                    // get client id from tblcontacts table
+                    $this->db->where('email', $data[$fields['email']]);
+                    $this->db->where('userid', $clientid);
+                    $contactID = $this->db->get(db_prefix().'contacts')->row()->id;
+
+                    if ( $_FILES['passport'] ){
+                        $path = 'uploads/clients/'.$clientid.'/';
+                        mkdir($path, 0777, true);
+
+                        $config['upload_path'] = $path;
+                        $config['allowed_types'] = 'gif|jpg|png|pdf';
+                        $config['max_size'] = '100000';
+                        $config['max_width'] = '102400';
+                        $config['max_height'] = '76800';
+                        $config['encrypt_name'] = true;
+
+                        $this->load->library('upload', $config);
+
+                        if ( ! $this->upload->do_upload('passport'))
+                        {
+                            $error = array('error' => $this->upload->display_errors());
+                            print_r($error);
+                        }
+                        else
+                        {
+                            $data = array('upload_data' => $this->upload->data());
+                            $passport = $data['upload_data']['file_name'];
+
+                            $file['dateadded'] = date('Y-m-d H:i:s');
+                            $file['rel_id']    = $clientid;
+                            $file['rel_type']  = 'customer';
+                            $file['file_name'] = $passport;
+                            $file['visible_to_customer']  = 1;
+                            $file['staffid']   = 0;
+                            $file['filetype'] = $_FILES['passport']['type'];
+                            $file['attachment_key'] = app_generate_hash();
+                            $file['contact_id'] = $contactID;
+
+                            $this->db->insert(db_prefix().'files', $file);
+
+                            $getId = $this->db->insert_id();
+
+                            $sharedTableData = [
+                                'file_id' => $getId,
+                                'contact_id' => $contactID,
+                            ];
+
+                            $this->db->insert(db_prefix().'shared_customer_files', $sharedTableData);
+                        }
+                    }
+
                     redirect($redUrl);
                 }
             }
