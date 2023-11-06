@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php init_head(); ?>
+<?php init_head();?>
 <div id="wrapper" class="customer_profile">
     <div class="content">
         <?php if (isset($client) && $client->registration_confirmed == 0 && is_admin()) { ?>

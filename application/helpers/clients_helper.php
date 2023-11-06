@@ -1248,3 +1248,15 @@ function is_automatic_calling_codes_enabled()
 {
     return hooks()->apply_filters('automatic_calling_codes_enabled', true);
 }
+
+
+function get_visa_type_category($id = ''){
+    $CI = &get_instance();
+    $table = 'tblvisa_type_category';
+
+    $mainQuery = $CI->db->select('name,id')->where('active', 1);
+
+    if ( $id ) $mainQuery = $mainQuery->where('id', $id);
+
+    return $mainQuery->get($table)->result();
+}

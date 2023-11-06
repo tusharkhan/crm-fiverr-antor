@@ -523,8 +523,14 @@ function app_unserialize($data)
 
 
 function dd(...$data){
-    echo '<pre>';
     var_dump($data);
+    die();
+}
+
+
+function ddPrint(...$data){
+    echo '<pre>';
+    print_r($data);
     echo '</pre>';
     die();
 }
@@ -556,4 +562,10 @@ function app_get_all_files($dir, $recursive = false, $includeDir = false)
 function match_email_pattern($email)
 {
     return preg_match('/^([a-zA-Z0-9._-]+@orinway.com)+$/', $email);
+}
+
+
+function checkIsset($array, $key)
+{
+    return $array[$key] ?? null;
 }

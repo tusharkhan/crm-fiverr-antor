@@ -1082,4 +1082,48 @@ class Clients extends AdminController
 
         echo json_encode($viewData);
     }
+
+    public function visa_type_category()
+    {
+        $data = $this->input->post();
+        $id  = (! empty($data['id'])) ? $data['id'] : null;
+
+        if ($this->input->is_ajax_request() && !$id ) {
+            $this->app->get_table_data('visa_type_category');
+        }
+
+        if ( $data ){
+            $insert_data = [
+                'name' => $data['name'],
+                'active' => $data['settings']['active'] ? 1 : 0,
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            if ( empty($id) ) array_merge($insert_data, [
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            $inserted_id = null;
+
+            if ( empty($id) ) $inserted_id = $this->clients_model->add_visa_type_category($insert_data);
+            else $inserted_id = $this->clients_model->edit_visa_type_category($insert_data, $id);
+
+            if ( $inserted_id ){
+                set_alert('success', _l('added_successfully', _l('visa_type_category')));
+            } else {
+                set_alert('danger', _l('problem_creating', _l('visa_type_category')));
+            }
+
+            echo json_encode(
+                [
+                    'success' => $inserted_id ? true : false,
+                    'message' => $inserted_id ? _l('added_successfully', 'Visa Type Category') : _l('problem_deleting', 'Visa Type Category'),
+                ]
+            );
+
+            exit();
+        }
+        
+        $this->load->view('admin/clients/visa_type_category');
+    }
 }
