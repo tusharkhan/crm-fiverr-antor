@@ -29,7 +29,7 @@
 
 
 <div class="col-md-10 col-md-offset-1">
-    <?php echo form_open('authentication/register', ['id' => 'register-form']); ?>
+    <?php echo form_open_multipart('authentication/register', ['id' => 'register-form']); ?>
     <div class="panel_s">
         <div class="panel-body">
             <div class="row">
@@ -157,6 +157,8 @@
                             <?php } ?>
                         </select>
                     </div>
+
+                    <?php echo render_input('passport', 'Passport', '', 'file'); ?>
 
                     <div class="form-group register-city-group">
                         <label class="control-label" for="city"><?php echo _l('clients_city'); ?></label>
