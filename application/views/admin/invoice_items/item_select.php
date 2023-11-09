@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div
-    class="form-group mbot25 items-wrapper select-placeholder<?php echo staff_can('create', 'items') ? ' input-group-select' : ''; ?>">
-    <div class="<?php echo staff_can('create', 'items') ? 'input-group input-group-select' : ''; ?>">
+    class="form-group mbot25 items-wrapper select-placeholder">
+    <div class="">
         <div class="items-select-wrapper">
             <select name="item_select"
                 class="selectpicker no-margin<?php echo $ajaxItems == true ? ' ajax-search' : ''; ?><?php echo staff_can('create', 'items') ? ' _select_input_group' : ''; ?>"
@@ -20,11 +20,11 @@
             </select>
         </div>
         <?php if (staff_can('items', '', 'create')) { ?>
-        <div class="input-group-btn">
-            <a href="#" data-toggle="modal" class="btn btn-default" data-target="#sales_item_modal">
-                <i class="fa fa-plus"></i>
-            </a>
-        </div>
+<!--        <div class="input-group-btn">-->
+<!--            <a href="#" data-toggle="modal" class="btn btn-default" data-target="#sales_item_modal">-->
+<!--                <i class="fa fa-plus"></i>-->
+<!--            </a>-->
+<!--        </div>-->
         <?php } ?>
     </div>
 </div>

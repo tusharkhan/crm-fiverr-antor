@@ -35,7 +35,7 @@
                   ?>
                 </div>
                 <div class="_buttons">
-                    <?php if (has_permission('customers', '', 'create')) { ?>
+                    <?php //if (has_permission('customers', '', 'create')) { ?>
                     <a href="<?php echo admin_url('clients/client'); ?>"
                         class="btn btn-primary mright5 test pull-left display-block">
                         <i class="fa-regular fa-plus tw-mr-1"></i>
@@ -44,7 +44,7 @@
                         class="btn btn-primary pull-left display-block mright5 hidden-xs">
                         <i class="fa-solid fa-upload tw-mr-1"></i>
                         <?php echo _l('import_customers'); ?></a>
-                    <?php } ?>
+                    <?php //} ?>
                     <a href="<?php echo admin_url('clients/all_contacts'); ?>"
                         class="btn btn-default pull-left display-block mright5">
                         <i class="fa-regular fa-user tw-mr-1"></i>
