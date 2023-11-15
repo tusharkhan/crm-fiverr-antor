@@ -160,7 +160,7 @@
                          $_tooltip_already_send = _l('invoice_already_send_to_client_tooltip', time_ago($invoice->datesend));
                      }
                      ?>
-                        <?php if (has_permission('invoices', '', 'edit')) { ?>
+                        <?php if (is_admin()) { ?>
                         <a href="<?php echo admin_url('invoices/invoice/' . $invoice->id); ?>" data-toggle="tooltip"
                             title="<?php echo _l('edit_invoice_tooltip'); ?>" class="btn btn-default btn-with-tooltip"
                             data-placement="bottom"><i class="fa-regular fa-pen-to-square"></i></a>

@@ -327,7 +327,8 @@ class Invoices extends AdminController
                     redirect($redUrl);
                 }
             } else {
-                if (!has_permission('invoices', '', 'edit')) {
+//                if (!has_permission('invoices', '', 'edit')) {
+                if (!is_admin()) {
                     access_denied('invoices');
                 }
 

@@ -7,7 +7,8 @@ if ($invoice->status == Invoices_model::STATUS_DRAFT) { ?>
 if (isset($invoice->scheduled_email) && $invoice->scheduled_email) { ?>
 <div class="alert alert-warning">
     <?php echo _l('invoice_will_be_sent_at', _dt($invoice->scheduled_email->scheduled_at)); ?>
-    <?php if (staff_can('edit', 'invoices') || $invoice->addedfrom == get_staff_user_id()) { ?>
+    <?php //if (staff_can('edit', 'invoices') || $invoice->addedfrom == get_staff_user_id()) { ?>
+    <?php if (is_admin()) { ?>
     <a href="#" onclick="edit_invoice_scheduled_email(<?php echo $invoice->scheduled_email->id; ?>); return false;">
         <?php echo _l('edit'); ?>
     </a>

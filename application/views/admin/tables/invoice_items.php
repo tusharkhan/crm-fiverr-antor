@@ -10,6 +10,7 @@ if (has_permission('items', '', 'delete')) {
 
 $aColumns = array_merge($aColumns, [
     'description',
+    'expense',
     'long_description',
     db_prefix() . 'items.rate as rate',
     't1.taxrate as taxrate_1',
@@ -83,11 +84,12 @@ foreach ($rResult as $aRow) {
 
     $row[] = app_format_money($aRow['rate'], get_base_currency());
 
-    $aRow['taxrate_1'] = $aRow['taxrate_1'] ?? 0;
-    $row[]             = '<span data-toggle="tooltip" title="' . $aRow['taxname_1'] . '" data-taxid="' . $aRow['tax_id_1'] . '">' . app_format_number($aRow['taxrate_1']) . '%' . '</span>';
+//    $aRow['taxrate_1'] = $aRow['taxrate_1'] ?? 0;
+//    $row[]             = '<span data-toggle="tooltip" title="' . $aRow['taxname_1'] . '" data-taxid="' . $aRow['tax_id_1'] . '">' . app_format_number($aRow['taxrate_1']) . '%' . '</span>';
 
-    $aRow['taxrate_2'] = $aRow['taxrate_2'] ?? 0;
-    $row[]             = '<span data-toggle="tooltip" title="' . $aRow['taxname_2'] . '" data-taxid="' . $aRow['tax_id_2'] . '">' . app_format_number($aRow['taxrate_2']) . '%' . '</span>';
+//    $aRow['taxrate_2'] = $aRow['taxrate_2'] ?? 0;
+//    $row[]             = '<span data-toggle="tooltip" title="' . $aRow['taxname_2'] . '" data-taxid="' . $aRow['tax_id_2'] . '">' . app_format_number($aRow['taxrate_2']) . '%' . '</span>';
+    $row[]             = app_format_money($aRow['expense'], get_base_currency());
     $row[]             = $aRow['unit'];
 
     $row[] = $aRow['group_name'];

@@ -197,6 +197,8 @@ $lang['invoice_item_add_edit_description'] = 'Description';
 $lang['invoice_item_add_edit_rate']        = 'Rate';
 $lang['invoice_item_edit_heading']         = 'Edit Item';
 $lang['invoice_item_add_heading']          = 'Add New Item';
+$lang['invoice_item_name']                 = 'Item Name';
+$lang['invoice_item_expense_name']         = 'Item Expense';
 
 # Invoices
 $lang['invoices']                                = 'Invoices';

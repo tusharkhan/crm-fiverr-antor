@@ -73,8 +73,7 @@
       _l('invoice_items_list_description'),
       _l('invoice_item_long_description'),
       _l('invoice_items_list_rate'),
-      _l('tax_1'),
-      _l('tax_2'),
+      _l('invoice_item_expense_name'),
       _l('unit'),
       _l('item_group_name'), ]);
 

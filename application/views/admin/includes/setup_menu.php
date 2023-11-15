@@ -10,6 +10,17 @@ $setup_menu['customers']['children'][] = [
     'icon' => 'fa fa-visa',
 ];
 
+$setup_menu['finance']['children'][] = [
+    'parent_slug' => 'customers',
+    'name' => 'Invoice Items',
+    'slug' => 'invoice-items',
+    'href' => admin_url('invoice_items'),
+    'position' => 1,
+    'badge' => [],
+    'icon' => 'fa fa-visa',
+];
+
+
 ?>
 <div id="setup-menu-wrapper" class="sidebar animated <?php if ($this->session->has_userdata('setup-menu-open')
     && $this->session->userdata('setup-menu-open') == true) {
