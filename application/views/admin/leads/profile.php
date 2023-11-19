@@ -102,6 +102,12 @@
         </button>
     </div>
     <?php } ?>
+
+        <a href="#" class="btn-with-tooltip btn btn-default" data-toggle="modal"
+           data-target="#statement_send_to_client"><span data-toggle="tooltip"
+                                                         data-title="<?php echo _l('send_to_email'); ?>" data-placement="bottom"><i
+                        class="fa-regular fa-envelope"></i></span></a>
+
     <?php if ($client && (has_permission('customers', '', 'view') || is_customer_admin(get_client_id_by_lead_id($lead->id)))) { ?>
     <a data-toggle="tooltip" class="btn btn-success pull-right lead-top-btn lead-view" data-placement="top"
         title="<?php echo _l('lead_converted_edit_client_profile'); ?>"
@@ -397,18 +403,7 @@
                 <?php }
             $value = (isset($lead) ? $lead->phonenumber : ''); ?>
                 <?php echo render_input('phonenumber', 'lead_add_edit_phonenumber', $value); ?>
-                <div class="form-group">
-                    <label for="lead_value"><?php echo _l('lead_value'); ?></label>
-                    <div class="input-group" data-toggle="tooltip" title="<?php echo _l('lead_value_tooltip'); ?>">
-                        <input type="number" class="form-control" name="lead_value" value="<?php if (isset($lead)) {
-                echo $lead->lead_value;
-            }?>">
-                        <div class="input-group-addon">
-                            <?php echo $base_currency->symbol; ?>
-                        </div>
-                    </div>
-                    </label>
-                </div>
+
                 <?php $value = (isset($lead) ? $lead->company : ''); ?>
                 <?php echo render_input('company', 'lead_company', $value); ?>
             </div>
@@ -427,28 +422,12 @@
                ?>
                 <?php $value = (isset($lead) ? $lead->zip : ''); ?>
                 <?php echo render_input('zip', 'lead_zip', $value); ?>
-                <?php if (!is_language_disabled()) { ?>
-                <div class="form-group">
-                    <label for="default_language"
-                        class="control-label"><?php echo _l('localization_default_language'); ?></label>
-                    <select name="default_language" data-live-search="true" id="default_language"
-                        class="form-control selectpicker"
-                        data-none-selected-text="<?php echo _l('dropdown_non_selected_tex'); ?>">
-                        <option value=""><?php echo _l('system_default_string'); ?></option>
-                        <?php foreach ($this->app->get_available_languages() as $availableLanguage) {
-                   $selected = '';
-                   if (isset($lead)) {
-                       if ($lead->default_language == $availableLanguage) {
-                           $selected = 'selected';
-                       }
-                   } ?>
-                        <option value="<?php echo $availableLanguage; ?>" <?php echo $selected; ?>>
-                            <?php echo ucfirst($availableLanguage); ?></option>
-                        <?php
-               } ?>
-                    </select>
-                </div>
-                <?php } ?>
+
+                <!-- password input --!-->
+
+                <?php echo render_input('password', 'Password', null, 'password', ['required' => true]); ?>
+
+
             </div>
             <div class="col-md-12">
                 <?php $value = (isset($lead) ? $lead->description : ''); ?>
@@ -512,6 +491,75 @@
     <div class="clearfix"></div>
     <?php echo form_close(); ?>
 </div>
+
+
+<?php if( $lead ): ?>
+
+<?php
+
+    $clientInfo = $this->db->where('leadid', $lead->id)->get('tblclients')->row();
+    $clientId = $clientInfo->userid;
+
+
+?>
+
+<div class="modal fade email-template" data-editor-id="tinymce-<?php echo $clientId; ?>"
+     id="statement_send_to_client" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <?php $url = admin_url('clients/send_statement') . '?customer_id=' . $clientId; echo form_open($url, ['id' => 'send_statement_form']); ?>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Send Email
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <?php
+                            $selected = [];
+                            $contacts = get_contacts($clientId);
+
+                            // to array
+                            $contacts = array_map(function($contact) {
+                                return [
+                                    'id' => $contact->id,
+                                    'email' => $contact->email,
+                                    'firstname' => $contact->firstname,
+                                    'lastname' => $contact->lastname,
+                                ];
+                            }, $contacts);
+
+                            foreach ($contacts as $contact) {
+                                if (has_contact_permission('invoices', $contact['id'])) {
+                                    array_push($selected, $contact['id']);
+                                }
+                            }
+                            echo render_select('send_to[]', $contacts, ['id', 'email', 'firstname,lastname'], 'invoice_estimate_sent_to_email', $selected, ['multiple' => true], [], '', '', false);
+                            ?>
+                        </div>
+                        <?php echo render_input('cc', 'CC'); ?>
+                        <hr />
+                        <h5 class="bold"><?php echo 'Type message'; ?></h5>
+                        <hr />
+                        <?php echo render_textarea('email_template_custom', '', '', [], [], '', 'tinymce-' . $clientId); ?>
+                        <?php echo form_hidden('template_name', 'client-statement'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo _l('close'); ?></button>
+                <button type="submit" autocomplete="off" data-loading-text="<?php echo _l('wait_text'); ?>"
+                        class="btn btn-primary"><?php echo _l('send'); ?></button>
+            </div>
+        </div>
+        <?php echo form_close(); ?>
+    </div>
+</div>
+<?php endif; ?>
 <?php if (isset($lead) && $lead_locked == true) { ?>
 <script>
 $(function() {
