@@ -110,6 +110,8 @@ class Leads_model extends App_Model
         $data['address'] = nl2br($data['address']);
 
         $data['email'] = trim($data['email']);
+        $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+
         $this->db->insert(db_prefix() . 'leads', $data);
         $insert_id = $this->db->insert_id();
         if ($insert_id) {

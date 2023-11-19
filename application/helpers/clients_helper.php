@@ -1260,3 +1260,13 @@ function get_visa_type_category($id = ''){
 
     return $mainQuery->get($table)->result();
 }
+
+function get_contacts($clientID){
+    $CI = &get_instance();
+
+    $table = 'tblcontacts';
+
+    $mainQuery = $CI->db->select('id,firstname,lastname,email')->where('userid', $clientID);
+
+    return $mainQuery->get($table)->result();
+}

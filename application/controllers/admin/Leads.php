@@ -81,6 +81,25 @@ class Leads extends AdminController
         if ($this->input->post()) {
             if ($id == '') {
                 $id      = $this->leads_model->add($this->input->post());
+
+                if ( $id ){
+                    $customerData = $this->input->post();
+                    $customerData['leadid'] = $id;
+
+                    unset(
+                        $customerData['status'],
+                        $customerData['source'],
+                        $customerData['assigned'],
+                        $customerData['tags'],
+                        $customerData['name'],
+                        $customerData['description'],
+                        $customerData['custom_contact_date'],
+                        $customerData['contacted_today'],
+                    );
+
+                    $this->clients_model->add($customerData, true);
+                }
+
                 $message = $id ? _l('added_successfully', _l('lead')) : '';
 
                 echo json_encode([
