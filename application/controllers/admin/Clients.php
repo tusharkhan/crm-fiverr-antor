@@ -1038,27 +1038,48 @@ class Clients extends AdminController
     {
         $customer_id = $this->input->get('customer_id');
 
-        if (!has_permission('invoices', '', 'view') && !has_permission('payments', '', 'view')) {
-            set_alert('danger', _l('access_denied'));
-            redirect(admin_url('clients/client/' . $customer_id));
-        }
+//        if (!has_permission('invoices', '', 'view') && !has_permission('payments', '', 'view')) {
+//            set_alert('danger', _l('access_denied'));
+//            redirect(admin_url('clients/client/' . $customer_id));
+//        }
+
+        // get lead id
+        $leadid = $this->db->where('userid', $customer_id)->get(db_prefix() . 'clients')->row()->leadid;
+
+        // client-statement
 
         $from = $this->input->get('from');
         $to   = $this->input->get('to');
 
         $send_to = $this->input->post('send_to');
         $cc      = $this->input->post('cc');
+        $type = $this->input->post('mail_type');
+        $subject = $this->input->post('subject');
+
+        if ( $type == 'followup' ){
+            $getStatus = $this->db->where('name', 'Followup')->get(db_prefix() . 'leads_status')->row()->id;
+        } else if ($type == 'quote'){
+            $getStatus = $this->db->where('name', 'Quote')->get(db_prefix() . 'leads_status')->row()->id;
+        } else {
+            $getStatus = $this->db->where('name', 'Job or Customer')->get(db_prefix() . 'leads_status')->row()->id;
+        }
+
+        //change lead status
+        $this->db->where('id', $leadid)->update(db_prefix() . 'leads', ['status' => $getStatus]);
+
+        $this->db->where('slug', 'client-statement')->update('tblemailtemplates', ['subject' => $subject]);
 
         $success = $this->clients_model->send_statement_to_email($customer_id, $send_to, $from, $to, $cc);
         // In case client use another language
         load_admin_language();
         if ($success) {
-            set_alert('success', _l('statement_sent_to_client_success'));
+            set_alert('success', 'Mail send');
         } else {
-            set_alert('danger', _l('statement_sent_to_client_fail'));
+            set_alert('danger', 'Error in sending mail');
         }
 
-        redirect(admin_url('clients/client/' . $customer_id . '?group=statement'));
+        //redirect(admin_url('clients/client/' . $customer_id . '?group=statement'));
+        redirect(admin_url('leads'));
     }
 
     public function statement()

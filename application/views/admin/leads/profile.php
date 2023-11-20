@@ -519,6 +519,24 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
+
+                            <?php
+                                $types = [
+                                    [
+                                        'id' => 'followup',
+                                        'name' => 'Followup'
+                                    ],
+                                    [
+                                        'id' => 'quote',
+                                        'name' => 'Quote'
+                                    ]
+                                ];
+                                echo render_select('mail_type', $types, ['id', 'name'], 'Mail Type', '', [], [], '', '', false);
+                            ?>
+
+                            <?php echo render_input('subject', 'Subject'); ?>
+
+                        <div class="form-group">
                             <?php
                             $selected = [];
                             $contacts = get_contacts($clientId);
@@ -558,8 +576,22 @@
         </div>
         <?php echo form_close(); ?>
     </div>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea#email_template_custom'  ,
+            a_plugin_option: true,
+            a_configuration_option: 400
+        });
+    </script>
 </div>
+
+
+
 <?php endif; ?>
+
+
+
 <?php if (isset($lead) && $lead_locked == true) { ?>
 <script>
 $(function() {
