@@ -30,6 +30,8 @@ class Customer_statement extends App_mail_template
     {
         $this->ci->load->library('merge_fields/client_merge_fields');
 
+        $this->template->subject = "tetst";
+
         $this->to($this->contact_email)
         ->set_rel_id($this->contact_id)
         ->set_merge_fields('client_merge_fields', $this->statement['client']->userid, $this->contact_id)
